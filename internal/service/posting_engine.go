@@ -24,39 +24,38 @@ func NewPostingEngine(st *store.Store, audit *AuditService) *PostingEngine {
 
 // Post 过账
 func (e *PostingEngine) Post(id, opUser string) error {
-	v := e.st.GetVoucher(id)
-	if v == nil {
-		return errors.New("凭证不存在")
-	}
-	if v.Status == domain.StatusPosted {
-		return errors.New("凭证已过账")
-	}
-	if v.Status != domain.StatusAudited {
-		return errors.New("仅已审核凭证可过账")
-	}
-	if !v.IsBalanced() {
-		return errors.New("借贷不平衡，无法过账")
-	}
-	p := e.st.GetPeriod(v.PeriodYear, v.PeriodMonth)
-	if p != nil && p.Status == domain.PeriodClosed {
-		return errors.New("会计期间已结账，无法过账")
-	}
-	for _, en := range v.Entries {
-		acc := e.st.GetAccount(en.AccountCode)
-		if acc == nil || !acc.IsActive || !acc.IsLeaf {
-			return fmt.Errorf("科目 %s 不可用", en.AccountCode)
+	return e.st.MutateE(func() error {
+		// 状态读取、凭证编号和余额更新必须处于同一个写锁范围，避免同一
+		// 凭证被两个并发请求都判定为“已审核”。
+		v := e.st.VoucherNL(id)
+		if v == nil {
+			return errors.New("凭证不存在")
 		}
-	}
+		if v.Status == domain.StatusPosted {
+			return errors.New("凭证已过账")
+		}
+		if v.Status != domain.StatusAudited {
+			return errors.New("仅已审核凭证可过账")
+		}
+		if !v.IsBalanced() {
+			return errors.New("借贷不平衡，无法过账")
+		}
+		if p := e.st.PeriodNL(v.PeriodYear, v.PeriodMonth); p != nil && p.Status == domain.PeriodClosed {
+			return errors.New("会计期间已结账，无法过账")
+		}
+		for _, en := range v.Entries {
+			acc := e.st.AccountNL(en.AccountCode)
+			if acc == nil || !acc.IsActive || !acc.IsLeaf {
+				return fmt.Errorf("科目 %s 不可用", en.AccountCode)
+			}
+		}
 
-	opID := NewOpID()
-	before := jsonOf(v)
-	return e.st.Mutate(func() {
-		// 编号
+		opID := NewOpID()
+		before := jsonOf(v)
 		if v.Number == "" {
 			seq := e.st.BumpVoucherSeq(v.PeriodKey())
 			v.Number = fmt.Sprintf("记-%04d%02d-%04d", v.PeriodYear, v.PeriodMonth, seq)
 		}
-		// 余额更新
 		for _, en := range v.Entries {
 			acc := e.st.AccountNL(en.AccountCode)
 			ak := AuxKey(en.AuxRefs)
@@ -78,6 +77,7 @@ func (e *PostingEngine) Post(id, opUser string) error {
 		v.PostedAt = &now
 		e.st.SetVoucher(v)
 		e.audit.Log(opUser, "post", "voucher", v.ID, opID, before, jsonOf(v))
+		return nil
 	})
 }
 

@@ -105,11 +105,22 @@ func (s *Store) path(name string) string { return filepath.Join(s.dir, name) }
 // Dir 数据目录
 func (s *Store) Dir() string { return s.dir }
 
-// Mutate 在写锁内执行业务变更并一次性落盘所有脏聚合
+// Mutate 在写锁内执行业务变更并一次性落盘所有脏聚合。
 func (s *Store) Mutate(fn func()) error {
+	return s.MutateE(func() error {
+		fn()
+		return nil
+	})
+}
+
+// MutateE 与 Mutate 相同，但允许调用方在持锁校验失败时中止本次变更。
+// 回调只能通过 NoLock 访问方法读取缓存，并通过写方法修改缓存。
+func (s *Store) MutateE(fn func() error) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	fn()
+	if err := fn(); err != nil {
+		return err
+	}
 	for e := range s.dirty {
 		if err := s.saveEntity(e); err != nil {
 			return err
