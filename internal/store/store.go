@@ -148,7 +148,7 @@ func (s *Store) markDirty(e ...entityDirty) {
 // ----- 内部写方法（须在 Mutate 内调用，不再加锁） -----
 
 func (s *Store) setAccount(a *domain.Account) {
-	s.accounts[a.Code] = a
+	s.accounts[a.Code] = cloneAccount(a)
 	s.markDirty(dirtyAccounts)
 }
 
@@ -162,7 +162,7 @@ func (s *Store) deleteAccount(code string) bool {
 }
 
 func (s *Store) setVoucher(v *domain.Voucher) {
-	s.vouchers[v.ID] = v
+	s.vouchers[v.ID] = cloneVoucher(v)
 	s.markDirty(dirtyVouchers)
 }
 
@@ -176,7 +176,7 @@ func (s *Store) deleteVoucher(id string) bool {
 }
 
 func (s *Store) setAuxItem(a *domain.AuxiliaryItem) {
-	s.auxitems[a.ID] = a
+	s.auxitems[a.ID] = cloneAuxItem(a)
 	s.markDirty(dirtyAux)
 }
 
@@ -190,12 +190,12 @@ func (s *Store) deleteAuxItem(id string) bool {
 }
 
 func (s *Store) setPeriod(p *domain.Period) {
-	s.periods[p.Key()] = p
+	s.periods[p.Key()] = clonePeriod(p)
 	s.markDirty(dirtyPeriods)
 }
 
 func (s *Store) setBalance(b *domain.PeriodBalance) {
-	s.balances[b.Key()] = b
+	s.balances[b.Key()] = cloneBalance(b)
 	s.markDirty(dirtyBalances)
 }
 
@@ -205,7 +205,7 @@ func (s *Store) appendAudit(l domain.AuditLog) {
 }
 
 func (s *Store) setMeta(m Meta) {
-	s.meta = m
+	s.meta = cloneMeta(m)
 	s.markDirty(dirtyMeta)
 }
 
@@ -224,7 +224,7 @@ func (s *Store) ListAccounts() []*domain.Account {
 	defer s.mu.RUnlock()
 	out := make([]*domain.Account, 0, len(s.accounts))
 	for _, a := range s.accounts {
-		out = append(out, a)
+		out = append(out, cloneAccount(a))
 	}
 	sort.Slice(out, func(i, j int) bool { return out[i].Code < out[j].Code })
 	return out
@@ -234,7 +234,7 @@ func (s *Store) ListAccounts() []*domain.Account {
 func (s *Store) GetAccount(code string) *domain.Account {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.accounts[code]
+	return cloneAccount(s.accounts[code])
 }
 
 // ListVouchers 按日期/编号排序的凭证
@@ -243,7 +243,7 @@ func (s *Store) ListVouchers() []*domain.Voucher {
 	defer s.mu.RUnlock()
 	out := make([]*domain.Voucher, 0, len(s.vouchers))
 	for _, v := range s.vouchers {
-		out = append(out, v)
+		out = append(out, cloneVoucher(v))
 	}
 	sort.Slice(out, func(i, j int) bool {
 		if out[i].PeriodYear != out[j].PeriodYear {
@@ -261,7 +261,7 @@ func (s *Store) ListVouchers() []*domain.Voucher {
 func (s *Store) GetVoucher(id string) *domain.Voucher {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.vouchers[id]
+	return cloneVoucher(s.vouchers[id])
 }
 
 // ListAuxItems 辅助项（可按类型过滤）
@@ -273,7 +273,7 @@ func (s *Store) ListAuxItems(t domain.AuxType) []*domain.AuxiliaryItem {
 		if t != "" && a.Type != t {
 			continue
 		}
-		out = append(out, a)
+		out = append(out, cloneAuxItem(a))
 	}
 	sort.Slice(out, func(i, j int) bool {
 		if out[i].Type != out[j].Type {
@@ -288,7 +288,7 @@ func (s *Store) ListAuxItems(t domain.AuxType) []*domain.AuxiliaryItem {
 func (s *Store) GetAuxItem(id string) *domain.AuxiliaryItem {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.auxitems[id]
+	return cloneAuxItem(s.auxitems[id])
 }
 
 // ListPeriods 期间列表
@@ -297,7 +297,7 @@ func (s *Store) ListPeriods() []*domain.Period {
 	defer s.mu.RUnlock()
 	out := make([]*domain.Period, 0, len(s.periods))
 	for _, p := range s.periods {
-		out = append(out, p)
+		out = append(out, clonePeriod(p))
 	}
 	sort.Slice(out, func(i, j int) bool { return out[i].Key() < out[j].Key() })
 	return out
@@ -307,7 +307,7 @@ func (s *Store) ListPeriods() []*domain.Period {
 func (s *Store) GetPeriod(year, month int) *domain.Period {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.periods[periodKeyStr(year, month)]
+	return clonePeriod(s.periods[periodKeyStr(year, month)])
 }
 
 // ListBalances 余额列表
@@ -316,7 +316,7 @@ func (s *Store) ListBalances() []*domain.PeriodBalance {
 	defer s.mu.RUnlock()
 	out := make([]*domain.PeriodBalance, 0, len(s.balances))
 	for _, b := range s.balances {
-		out = append(out, b)
+		out = append(out, cloneBalance(b))
 	}
 	sort.Slice(out, func(i, j int) bool { return out[i].Key() < out[j].Key() })
 	return out
@@ -327,7 +327,7 @@ func (s *Store) GetBalance(year, month int, accountCode, auxKey string) *domain.
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	key := balanceKey(year, month, accountCode, auxKey)
-	return s.balances[key]
+	return cloneBalance(s.balances[key])
 }
 
 // ListAudit 审计日志（倒序）
@@ -344,7 +344,7 @@ func (s *Store) ListAudit() []domain.AuditLog {
 func (s *Store) Meta() Meta {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	m := s.meta
+	m := cloneMeta(s.meta)
 	if m.VoucherSeq == nil {
 		m.VoucherSeq = map[string]int{}
 	}
