@@ -2,9 +2,11 @@ package store
 
 import (
 	"archive/zip"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // Backup 将数据目录所有文件打包到 zip
@@ -33,7 +35,9 @@ func (s *Store) Backup(dest string) error {
 	if err := w.Close(); err != nil {
 		return err
 	}
-	f.Close()
+	if err := f.Close(); err != nil {
+		return err
+	}
 	return os.Rename(tmp, dest)
 }
 
@@ -68,30 +72,77 @@ func Restore(zipPath, dataDir string) error {
 		return err
 	}
 	defer r.Close()
-	if err := os.MkdirAll(dataDir, 0o755); err != nil {
+
+	root, err := filepath.Abs(dataDir)
+	if err != nil {
+		return fmt.Errorf("解析数据目录: %w", err)
+	}
+	if err := os.MkdirAll(root, 0o755); err != nil {
 		return err
 	}
+
 	for _, f := range r.File {
 		if f.FileInfo().IsDir() {
 			continue
 		}
-		outPath := filepath.Join(dataDir, f.Name)
-		rc, err := f.Open()
+		outPath, err := restoreTarget(root, f)
 		if err != nil {
 			return err
 		}
-		out, err := os.Create(outPath)
-		if err != nil {
-			rc.Close()
+		if err := extractZipFile(f, outPath); err != nil {
 			return err
 		}
-		if _, err := io.Copy(out, rc); err != nil {
-			rc.Close()
-			out.Close()
-			return err
-		}
-		rc.Close()
-		out.Close()
+	}
+	return nil
+}
+
+func restoreTarget(root string, f *zip.File) (string, error) {
+	name := filepath.Clean(f.Name)
+	if name == "." || name == "" || filepath.IsAbs(name) || filepath.VolumeName(name) != "" {
+		return "", fmt.Errorf("备份条目路径无效: %q", f.Name)
+	}
+	if name == ".." || strings.HasPrefix(name, ".."+string(filepath.Separator)) {
+		return "", fmt.Errorf("备份条目越出数据目录: %q", f.Name)
+	}
+	target, err := filepath.Abs(filepath.Join(root, name))
+	if err != nil {
+		return "", fmt.Errorf("解析备份条目: %w", err)
+	}
+	relative, err := filepath.Rel(root, target)
+	if err != nil || relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+		return "", fmt.Errorf("备份条目越出数据目录: %q", f.Name)
+	}
+	if !f.Mode().IsRegular() {
+		return "", fmt.Errorf("备份条目不是普通文件: %q", f.Name)
+	}
+	return target, nil
+}
+
+func extractZipFile(f *zip.File, outPath string) error {
+	source, err := f.Open()
+	if err != nil {
+		return err
+	}
+	defer source.Close()
+
+	if err := os.MkdirAll(filepath.Dir(outPath), 0o755); err != nil {
+		return err
+	}
+	mode := f.Mode().Perm()
+	if mode == 0 {
+		mode = 0o644
+	}
+	destination, err := os.OpenFile(outPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, mode)
+	if err != nil {
+		return err
+	}
+	_, copyErr := io.Copy(destination, source)
+	closeErr := destination.Close()
+	if copyErr != nil {
+		return copyErr
+	}
+	if closeErr != nil {
+		return closeErr
 	}
 	return nil
 }
