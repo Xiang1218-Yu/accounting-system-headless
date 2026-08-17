@@ -1,0 +1,244 @@
+[
+  {
+    "id": "b48e667f-2db9-4fca-a59b-dbcb2d912744",
+    "timestamp": "2026-08-16T17:52:18.435066+08:00",
+    "user": "user",
+    "action": "set_current_period",
+    "entity": "meta",
+    "entity_id": "2026-09",
+    "op_id": "feb18360-5be4-451c-9c81-062aa3710478"
+  },
+  {
+    "id": "7fa996b4-8154-4b0e-9669-439711c59da9",
+    "timestamp": "2026-08-16T17:52:19.718926+08:00",
+    "user": "user",
+    "action": "set_current_period",
+    "entity": "meta",
+    "entity_id": "2026-08",
+    "op_id": "7b5e5537-1418-4154-b693-5fa330209887"
+  },
+  {
+    "id": "4564ce8c-bdd8-4458-b271-fd0e625b768f",
+    "timestamp": "2026-08-16T17:52:31.006071+08:00",
+    "user": "demo",
+    "action": "create",
+    "entity": "voucher",
+    "entity_id": "4024b656-9a1b-47ed-b7f4-907441f3a1da",
+    "after": "{\"id\":\"4024b656-9a1b-47ed-b7f4-907441f3a1da\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-05T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"股东投入资本\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"收到投资款\",\"debit\":\"500000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"3001\",\"summary\":\"实收资本\",\"debit\":\"0\",\"credit\":\"500000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "ff6addbb-6694-4def-a08c-88b570642b6a"
+  },
+  {
+    "id": "0756bbc1-20c5-4577-a65c-742a9d329348",
+    "timestamp": "2026-08-16T17:52:31.016101+08:00",
+    "user": "demo",
+    "action": "approve",
+    "entity": "voucher",
+    "entity_id": "4024b656-9a1b-47ed-b7f4-907441f3a1da",
+    "before": "{\"id\":\"4024b656-9a1b-47ed-b7f4-907441f3a1da\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-05T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"股东投入资本\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"收到投资款\",\"debit\":\"500000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"3001\",\"summary\":\"实收资本\",\"debit\":\"0\",\"credit\":\"500000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"4024b656-9a1b-47ed-b7f4-907441f3a1da\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-05T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"股东投入资本\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"收到投资款\",\"debit\":\"500000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"3001\",\"summary\":\"实收资本\",\"debit\":\"0\",\"credit\":\"500000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "3a7e10b0-9582-468b-97b4-955f72135709"
+  },
+  {
+    "id": "804ac840-452a-40fa-a4e0-e46acaaa8344",
+    "timestamp": "2026-08-16T17:52:31.02517+08:00",
+    "user": "demo",
+    "action": "post",
+    "entity": "voucher",
+    "entity_id": "4024b656-9a1b-47ed-b7f4-907441f3a1da",
+    "before": "{\"id\":\"4024b656-9a1b-47ed-b7f4-907441f3a1da\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-05T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"股东投入资本\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"收到投资款\",\"debit\":\"500000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"3001\",\"summary\":\"实收资本\",\"debit\":\"0\",\"credit\":\"500000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"4024b656-9a1b-47ed-b7f4-907441f3a1da\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-05T00:00:00Z\",\"number\":\"记-202608-0001\",\"status\":\"已过账\",\"type\":\"普通\",\"summary\":\"股东投入资本\",\"maker\":\"demo\",\"auditor\":\"demo\",\"poster\":\"demo\",\"posted_at\":\"2026-08-16T17:52:31.025166+08:00\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"收到投资款\",\"debit\":\"500000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"3001\",\"summary\":\"实收资本\",\"debit\":\"0\",\"credit\":\"500000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "695c9805-4198-4ba7-bca8-5b7d8cbdc4e4"
+  },
+  {
+    "id": "aff19316-baf0-4059-a945-bc0f78aaec4d",
+    "timestamp": "2026-08-16T17:52:31.041129+08:00",
+    "user": "demo",
+    "action": "create",
+    "entity": "voucher",
+    "entity_id": "241663df-00ba-41ba-8300-15e7149c587c",
+    "after": "{\"id\":\"241663df-00ba-41ba-8300-15e7149c587c\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-08T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"销售商品收款\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"销售收款\",\"debit\":\"113000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"5001\",\"summary\":\"主营业务收入\",\"debit\":\"0\",\"credit\":\"100000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"应交增值税\",\"debit\":\"0\",\"credit\":\"13000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "84cce902-e14c-481a-a76f-a82efc0bbf11"
+  },
+  {
+    "id": "3b908fcd-23bd-48fd-85cf-6c6d557ad48e",
+    "timestamp": "2026-08-16T17:52:31.05011+08:00",
+    "user": "demo",
+    "action": "approve",
+    "entity": "voucher",
+    "entity_id": "241663df-00ba-41ba-8300-15e7149c587c",
+    "before": "{\"id\":\"241663df-00ba-41ba-8300-15e7149c587c\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-08T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"销售商品收款\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"销售收款\",\"debit\":\"113000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"5001\",\"summary\":\"主营业务收入\",\"debit\":\"0\",\"credit\":\"100000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"应交增值税\",\"debit\":\"0\",\"credit\":\"13000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"241663df-00ba-41ba-8300-15e7149c587c\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-08T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"销售商品收款\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"销售收款\",\"debit\":\"113000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"5001\",\"summary\":\"主营业务收入\",\"debit\":\"0\",\"credit\":\"100000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"应交增值税\",\"debit\":\"0\",\"credit\":\"13000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "5d5bea4f-3cc3-4843-bd8d-226cc095a24e"
+  },
+  {
+    "id": "7d6eaac1-855c-4612-a42d-fb569d0c828e",
+    "timestamp": "2026-08-16T17:52:31.058429+08:00",
+    "user": "demo",
+    "action": "post",
+    "entity": "voucher",
+    "entity_id": "241663df-00ba-41ba-8300-15e7149c587c",
+    "before": "{\"id\":\"241663df-00ba-41ba-8300-15e7149c587c\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-08T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"销售商品收款\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"销售收款\",\"debit\":\"113000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"5001\",\"summary\":\"主营业务收入\",\"debit\":\"0\",\"credit\":\"100000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"应交增值税\",\"debit\":\"0\",\"credit\":\"13000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"241663df-00ba-41ba-8300-15e7149c587c\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-08T00:00:00Z\",\"number\":\"记-202608-0002\",\"status\":\"已过账\",\"type\":\"普通\",\"summary\":\"销售商品收款\",\"maker\":\"demo\",\"auditor\":\"demo\",\"poster\":\"demo\",\"posted_at\":\"2026-08-16T17:52:31.058426+08:00\",\"entries\":[{\"account_code\":\"1002\",\"summary\":\"销售收款\",\"debit\":\"113000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"5001\",\"summary\":\"主营业务收入\",\"debit\":\"0\",\"credit\":\"100000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"应交增值税\",\"debit\":\"0\",\"credit\":\"13000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "a642f7cd-a072-4b26-9e33-a6d44d96a32f"
+  },
+  {
+    "id": "e316ecdc-69ab-42c3-b8d8-da838ba532ea",
+    "timestamp": "2026-08-16T17:52:31.076052+08:00",
+    "user": "demo",
+    "action": "create",
+    "entity": "voucher",
+    "entity_id": "a08c0595-2f64-4d90-9f03-4cc298969a54",
+    "after": "{\"id\":\"a08c0595-2f64-4d90-9f03-4cc298969a54\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-10T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"采购商品付款\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"1405\",\"summary\":\"入库\",\"debit\":\"60000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"进项税\",\"debit\":\"7800\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"67800\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "b3fb9f83-3eeb-48e8-b518-33984861d5ae"
+  },
+  {
+    "id": "fc58b4cf-8ead-482a-a1c9-e1fd92877f07",
+    "timestamp": "2026-08-16T17:52:31.084094+08:00",
+    "user": "demo",
+    "action": "approve",
+    "entity": "voucher",
+    "entity_id": "a08c0595-2f64-4d90-9f03-4cc298969a54",
+    "before": "{\"id\":\"a08c0595-2f64-4d90-9f03-4cc298969a54\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-10T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"采购商品付款\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"1405\",\"summary\":\"入库\",\"debit\":\"60000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"进项税\",\"debit\":\"7800\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"67800\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"a08c0595-2f64-4d90-9f03-4cc298969a54\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-10T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"采购商品付款\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"1405\",\"summary\":\"入库\",\"debit\":\"60000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"进项税\",\"debit\":\"7800\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"67800\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "c3e0d06e-764e-4a58-bce5-fc7784de40f9"
+  },
+  {
+    "id": "5ee591e1-a6fa-41f6-a5f7-a5ba75dbcc5b",
+    "timestamp": "2026-08-16T17:52:31.092122+08:00",
+    "user": "demo",
+    "action": "post",
+    "entity": "voucher",
+    "entity_id": "a08c0595-2f64-4d90-9f03-4cc298969a54",
+    "before": "{\"id\":\"a08c0595-2f64-4d90-9f03-4cc298969a54\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-10T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"采购商品付款\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"1405\",\"summary\":\"入库\",\"debit\":\"60000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"进项税\",\"debit\":\"7800\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"67800\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"a08c0595-2f64-4d90-9f03-4cc298969a54\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-10T00:00:00Z\",\"number\":\"记-202608-0003\",\"status\":\"已过账\",\"type\":\"普通\",\"summary\":\"采购商品付款\",\"maker\":\"demo\",\"auditor\":\"demo\",\"poster\":\"demo\",\"posted_at\":\"2026-08-16T17:52:31.092118+08:00\",\"entries\":[{\"account_code\":\"1405\",\"summary\":\"入库\",\"debit\":\"60000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2221\",\"summary\":\"进项税\",\"debit\":\"7800\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"67800\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "19ac97a3-6cc3-4d40-9d3b-2740d80ab0ee"
+  },
+  {
+    "id": "f77568a8-e67c-4821-9c14-b39475471199",
+    "timestamp": "2026-08-16T17:52:31.109075+08:00",
+    "user": "demo",
+    "action": "create",
+    "entity": "voucher",
+    "entity_id": "b9a5c467-620e-4ed4-83ef-0e549dc58dd6",
+    "after": "{\"id\":\"b9a5c467-620e-4ed4-83ef-0e549dc58dd6\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-15T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"结转销售成本\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"5401\",\"summary\":\"主营业务成本\",\"debit\":\"55000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1405\",\"summary\":\"出库\",\"debit\":\"0\",\"credit\":\"55000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "bdc58f8b-b87a-4df5-990d-8d45a13338f5"
+  },
+  {
+    "id": "8d0ef416-6502-4bac-8e95-5c3e8593f334",
+    "timestamp": "2026-08-16T17:52:31.116909+08:00",
+    "user": "demo",
+    "action": "approve",
+    "entity": "voucher",
+    "entity_id": "b9a5c467-620e-4ed4-83ef-0e549dc58dd6",
+    "before": "{\"id\":\"b9a5c467-620e-4ed4-83ef-0e549dc58dd6\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-15T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"结转销售成本\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"5401\",\"summary\":\"主营业务成本\",\"debit\":\"55000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1405\",\"summary\":\"出库\",\"debit\":\"0\",\"credit\":\"55000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"b9a5c467-620e-4ed4-83ef-0e549dc58dd6\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-15T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"结转销售成本\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"5401\",\"summary\":\"主营业务成本\",\"debit\":\"55000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1405\",\"summary\":\"出库\",\"debit\":\"0\",\"credit\":\"55000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "c01090c4-a5eb-4c15-a3f9-2c622e8714d4"
+  },
+  {
+    "id": "883092f1-f165-4aa3-8792-03e9d3e5fbe8",
+    "timestamp": "2026-08-16T17:52:31.124919+08:00",
+    "user": "demo",
+    "action": "post",
+    "entity": "voucher",
+    "entity_id": "b9a5c467-620e-4ed4-83ef-0e549dc58dd6",
+    "before": "{\"id\":\"b9a5c467-620e-4ed4-83ef-0e549dc58dd6\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-15T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"结转销售成本\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"5401\",\"summary\":\"主营业务成本\",\"debit\":\"55000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1405\",\"summary\":\"出库\",\"debit\":\"0\",\"credit\":\"55000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"b9a5c467-620e-4ed4-83ef-0e549dc58dd6\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-15T00:00:00Z\",\"number\":\"记-202608-0004\",\"status\":\"已过账\",\"type\":\"普通\",\"summary\":\"结转销售成本\",\"maker\":\"demo\",\"auditor\":\"demo\",\"poster\":\"demo\",\"posted_at\":\"2026-08-16T17:52:31.124915+08:00\",\"entries\":[{\"account_code\":\"5401\",\"summary\":\"主营业务成本\",\"debit\":\"55000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1405\",\"summary\":\"出库\",\"debit\":\"0\",\"credit\":\"55000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "20a93892-3c1c-40dd-bc29-efa07293ad9d"
+  },
+  {
+    "id": "ba6496c7-1b31-4356-908a-d5af494a4c25",
+    "timestamp": "2026-08-16T17:52:31.140925+08:00",
+    "user": "demo",
+    "action": "create",
+    "entity": "voucher",
+    "entity_id": "825425c9-5240-4f7e-a5f6-b28188666ff8",
+    "after": "{\"id\":\"825425c9-5240-4f7e-a5f6-b28188666ff8\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-20T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"支付办公租金\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-租金\",\"debit\":\"8000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"8000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "eed9ad24-cff0-4bff-bf60-375d29827398"
+  },
+  {
+    "id": "9eb0fd17-301c-4bdf-8430-ea2ef174fc84",
+    "timestamp": "2026-08-16T17:52:31.150067+08:00",
+    "user": "demo",
+    "action": "approve",
+    "entity": "voucher",
+    "entity_id": "825425c9-5240-4f7e-a5f6-b28188666ff8",
+    "before": "{\"id\":\"825425c9-5240-4f7e-a5f6-b28188666ff8\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-20T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"支付办公租金\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-租金\",\"debit\":\"8000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"8000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"825425c9-5240-4f7e-a5f6-b28188666ff8\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-20T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"支付办公租金\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-租金\",\"debit\":\"8000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"8000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "7dc8b960-a29f-4699-befa-30346bda9b0b"
+  },
+  {
+    "id": "079075f3-5bbd-4284-8977-9da52406074f",
+    "timestamp": "2026-08-16T17:52:31.158441+08:00",
+    "user": "demo",
+    "action": "post",
+    "entity": "voucher",
+    "entity_id": "825425c9-5240-4f7e-a5f6-b28188666ff8",
+    "before": "{\"id\":\"825425c9-5240-4f7e-a5f6-b28188666ff8\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-20T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"支付办公租金\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-租金\",\"debit\":\"8000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"8000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"825425c9-5240-4f7e-a5f6-b28188666ff8\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-20T00:00:00Z\",\"number\":\"记-202608-0005\",\"status\":\"已过账\",\"type\":\"普通\",\"summary\":\"支付办公租金\",\"maker\":\"demo\",\"auditor\":\"demo\",\"poster\":\"demo\",\"posted_at\":\"2026-08-16T17:52:31.158437+08:00\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-租金\",\"debit\":\"8000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1002\",\"summary\":\"付款\",\"debit\":\"0\",\"credit\":\"8000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "711c20b2-d67c-4d63-ad45-8ec1682a1927"
+  },
+  {
+    "id": "8c4f2af6-26ee-4b30-8318-81d2205846ca",
+    "timestamp": "2026-08-16T17:52:31.17504+08:00",
+    "user": "demo",
+    "action": "create",
+    "entity": "voucher",
+    "entity_id": "9d58947e-f321-492f-8bac-a84645fc183e",
+    "after": "{\"id\":\"9d58947e-f321-492f-8bac-a84645fc183e\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-25T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"支付员工薪酬\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-薪酬\",\"debit\":\"20000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2211\",\"summary\":\"应付职工薪酬\",\"debit\":\"0\",\"credit\":\"20000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "6b9fe15d-0bbd-4a7d-847b-7cb3b98cd204"
+  },
+  {
+    "id": "d2bdd5f6-db65-4e8c-a004-5db555ed79ff",
+    "timestamp": "2026-08-16T17:52:31.183131+08:00",
+    "user": "demo",
+    "action": "approve",
+    "entity": "voucher",
+    "entity_id": "9d58947e-f321-492f-8bac-a84645fc183e",
+    "before": "{\"id\":\"9d58947e-f321-492f-8bac-a84645fc183e\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-25T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"支付员工薪酬\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-薪酬\",\"debit\":\"20000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2211\",\"summary\":\"应付职工薪酬\",\"debit\":\"0\",\"credit\":\"20000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"9d58947e-f321-492f-8bac-a84645fc183e\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-25T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"支付员工薪酬\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-薪酬\",\"debit\":\"20000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2211\",\"summary\":\"应付职工薪酬\",\"debit\":\"0\",\"credit\":\"20000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "2eb27d18-0c55-43b1-9acc-15eb5b4f2c65"
+  },
+  {
+    "id": "1db607bc-a8eb-4eb7-a06e-6d10615eff74",
+    "timestamp": "2026-08-16T17:52:31.192239+08:00",
+    "user": "demo",
+    "action": "post",
+    "entity": "voucher",
+    "entity_id": "9d58947e-f321-492f-8bac-a84645fc183e",
+    "before": "{\"id\":\"9d58947e-f321-492f-8bac-a84645fc183e\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-25T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"支付员工薪酬\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-薪酬\",\"debit\":\"20000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2211\",\"summary\":\"应付职工薪酬\",\"debit\":\"0\",\"credit\":\"20000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"9d58947e-f321-492f-8bac-a84645fc183e\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-25T00:00:00Z\",\"number\":\"记-202608-0006\",\"status\":\"已过账\",\"type\":\"普通\",\"summary\":\"支付员工薪酬\",\"maker\":\"demo\",\"auditor\":\"demo\",\"poster\":\"demo\",\"posted_at\":\"2026-08-16T17:52:31.192235+08:00\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-薪酬\",\"debit\":\"20000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"2211\",\"summary\":\"应付职工薪酬\",\"debit\":\"0\",\"credit\":\"20000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "f624ad6a-d03a-49bc-a0d2-be188f842015"
+  },
+  {
+    "id": "bb50f9ea-10f0-47ae-abe5-50c5da83f5b7",
+    "timestamp": "2026-08-16T17:52:31.208293+08:00",
+    "user": "demo",
+    "action": "create",
+    "entity": "voucher",
+    "entity_id": "90120d32-ea53-43b7-adfd-8f5501922e09",
+    "after": "{\"id\":\"90120d32-ea53-43b7-adfd-8f5501922e09\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-28T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"计提折旧\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-折旧\",\"debit\":\"3000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1602\",\"summary\":\"累计折旧\",\"debit\":\"0\",\"credit\":\"3000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "70076b6d-c48f-41ea-8112-d500c2510ffb"
+  },
+  {
+    "id": "2b3f88f8-c4db-4ad1-9f98-4a707b06494a",
+    "timestamp": "2026-08-16T17:52:31.217174+08:00",
+    "user": "demo",
+    "action": "approve",
+    "entity": "voucher",
+    "entity_id": "90120d32-ea53-43b7-adfd-8f5501922e09",
+    "before": "{\"id\":\"90120d32-ea53-43b7-adfd-8f5501922e09\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-28T00:00:00Z\",\"number\":\"\",\"status\":\"草稿\",\"type\":\"普通\",\"summary\":\"计提折旧\",\"maker\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-折旧\",\"debit\":\"3000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1602\",\"summary\":\"累计折旧\",\"debit\":\"0\",\"credit\":\"3000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"90120d32-ea53-43b7-adfd-8f5501922e09\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-28T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"计提折旧\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-折旧\",\"debit\":\"3000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1602\",\"summary\":\"累计折旧\",\"debit\":\"0\",\"credit\":\"3000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "294e82fd-a2b5-4095-80a3-73e309fef8a7"
+  },
+  {
+    "id": "1ee22c21-c97d-4bbb-bb84-04f94d02e03e",
+    "timestamp": "2026-08-16T17:52:31.225314+08:00",
+    "user": "demo",
+    "action": "post",
+    "entity": "voucher",
+    "entity_id": "90120d32-ea53-43b7-adfd-8f5501922e09",
+    "before": "{\"id\":\"90120d32-ea53-43b7-adfd-8f5501922e09\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-28T00:00:00Z\",\"number\":\"\",\"status\":\"已审核\",\"type\":\"普通\",\"summary\":\"计提折旧\",\"maker\":\"demo\",\"auditor\":\"demo\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-折旧\",\"debit\":\"3000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1602\",\"summary\":\"累计折旧\",\"debit\":\"0\",\"credit\":\"3000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "after": "{\"id\":\"90120d32-ea53-43b7-adfd-8f5501922e09\",\"period_year\":2026,\"period_month\":8,\"voucher_date\":\"2026-08-28T00:00:00Z\",\"number\":\"记-202608-0007\",\"status\":\"已过账\",\"type\":\"普通\",\"summary\":\"计提折旧\",\"maker\":\"demo\",\"auditor\":\"demo\",\"poster\":\"demo\",\"posted_at\":\"2026-08-16T17:52:31.225304+08:00\",\"entries\":[{\"account_code\":\"5602\",\"summary\":\"管理费用-折旧\",\"debit\":\"3000\",\"credit\":\"0\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"},{\"account_code\":\"1602\",\"summary\":\"累计折旧\",\"debit\":\"0\",\"credit\":\"3000\",\"debit_fc\":\"0\",\"credit_fc\":\"0\"}]}",
+    "op_id": "7cc67de4-8f82-4427-ae61-ddff24981b0c"
+  }
+]

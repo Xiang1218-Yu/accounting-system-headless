@@ -1,0 +1,4 @@
+/accounting
+*.tmp
+*.zip
+.DS_Store
