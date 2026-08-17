@@ -148,7 +148,8 @@ func (s *Store) markDirty(e ...entityDirty) {
 // ----- 内部写方法（须在 Mutate 内调用，不再加锁） -----
 
 func (s *Store) setAccount(a *domain.Account) {
-	s.accounts[a.Code] = a
+	// 克隆后落盘，避免调用方继续修改入参时污染内存缓存
+	s.accounts[a.Code] = a.Clone()
 	s.markDirty(dirtyAccounts)
 }
 
@@ -162,7 +163,7 @@ func (s *Store) deleteAccount(code string) bool {
 }
 
 func (s *Store) setVoucher(v *domain.Voucher) {
-	s.vouchers[v.ID] = v
+	s.vouchers[v.ID] = v.Clone()
 	s.markDirty(dirtyVouchers)
 }
 
@@ -176,7 +177,7 @@ func (s *Store) deleteVoucher(id string) bool {
 }
 
 func (s *Store) setAuxItem(a *domain.AuxiliaryItem) {
-	s.auxitems[a.ID] = a
+	s.auxitems[a.ID] = a.Clone()
 	s.markDirty(dirtyAux)
 }
 
@@ -190,12 +191,12 @@ func (s *Store) deleteAuxItem(id string) bool {
 }
 
 func (s *Store) setPeriod(p *domain.Period) {
-	s.periods[p.Key()] = p
+	s.periods[p.Key()] = p.Clone()
 	s.markDirty(dirtyPeriods)
 }
 
 func (s *Store) setBalance(b *domain.PeriodBalance) {
-	s.balances[b.Key()] = b
+	s.balances[b.Key()] = b.Clone()
 	s.markDirty(dirtyBalances)
 }
 
@@ -205,7 +206,14 @@ func (s *Store) appendAudit(l domain.AuditLog) {
 }
 
 func (s *Store) setMeta(m Meta) {
+	// 深拷贝 VoucherSeq，避免调用方修改其 map 污染缓存
 	s.meta = m
+	if m.VoucherSeq != nil {
+		s.meta.VoucherSeq = make(map[string]int, len(m.VoucherSeq))
+		for k, v := range m.VoucherSeq {
+			s.meta.VoucherSeq[k] = v
+		}
+	}
 	s.markDirty(dirtyMeta)
 }
 
@@ -218,32 +226,32 @@ func (s *Store) bumpVoucherSeq(periodKey string) int {
 
 // ----- 只读方法（RLock） -----
 
-// ListAccounts 按编码排序的科目
+// ListAccounts 按编码排序的科目。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) ListAccounts() []*domain.Account {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	out := make([]*domain.Account, 0, len(s.accounts))
 	for _, a := range s.accounts {
-		out = append(out, a)
+		out = append(out, a.Clone())
 	}
 	sort.Slice(out, func(i, j int) bool { return out[i].Code < out[j].Code })
 	return out
 }
 
-// GetAccount 取科目
+// GetAccount 取科目。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) GetAccount(code string) *domain.Account {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.accounts[code]
+	return s.accounts[code].Clone()
 }
 
-// ListVouchers 按日期/编号排序的凭证
+// ListVouchers 按日期/编号排序的凭证。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) ListVouchers() []*domain.Voucher {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	out := make([]*domain.Voucher, 0, len(s.vouchers))
 	for _, v := range s.vouchers {
-		out = append(out, v)
+		out = append(out, v.Clone())
 	}
 	sort.Slice(out, func(i, j int) bool {
 		if out[i].PeriodYear != out[j].PeriodYear {
@@ -257,14 +265,14 @@ func (s *Store) ListVouchers() []*domain.Voucher {
 	return out
 }
 
-// GetVoucher 取凭证
+// GetVoucher 取凭证。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) GetVoucher(id string) *domain.Voucher {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.vouchers[id]
+	return s.vouchers[id].Clone()
 }
 
-// ListAuxItems 辅助项（可按类型过滤）
+// ListAuxItems 辅助项（可按类型过滤）。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) ListAuxItems(t domain.AuxType) []*domain.AuxiliaryItem {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
@@ -273,7 +281,7 @@ func (s *Store) ListAuxItems(t domain.AuxType) []*domain.AuxiliaryItem {
 		if t != "" && a.Type != t {
 			continue
 		}
-		out = append(out, a)
+		out = append(out, a.Clone())
 	}
 	sort.Slice(out, func(i, j int) bool {
 		if out[i].Type != out[j].Type {
@@ -284,50 +292,50 @@ func (s *Store) ListAuxItems(t domain.AuxType) []*domain.AuxiliaryItem {
 	return out
 }
 
-// GetAuxItem 取辅助项
+// GetAuxItem 取辅助项。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) GetAuxItem(id string) *domain.AuxiliaryItem {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.auxitems[id]
+	return s.auxitems[id].Clone()
 }
 
-// ListPeriods 期间列表
+// ListPeriods 期间列表。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) ListPeriods() []*domain.Period {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	out := make([]*domain.Period, 0, len(s.periods))
 	for _, p := range s.periods {
-		out = append(out, p)
+		out = append(out, p.Clone())
 	}
 	sort.Slice(out, func(i, j int) bool { return out[i].Key() < out[j].Key() })
 	return out
 }
 
-// GetPeriod 取期间
+// GetPeriod 取期间。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) GetPeriod(year, month int) *domain.Period {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.periods[periodKeyStr(year, month)]
+	return s.periods[periodKeyStr(year, month)].Clone()
 }
 
-// ListBalances 余额列表
+// ListBalances 余额列表。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) ListBalances() []*domain.PeriodBalance {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	out := make([]*domain.PeriodBalance, 0, len(s.balances))
 	for _, b := range s.balances {
-		out = append(out, b)
+		out = append(out, b.Clone())
 	}
 	sort.Slice(out, func(i, j int) bool { return out[i].Key() < out[j].Key() })
 	return out
 }
 
-// GetBalance 取余额
+// GetBalance 取余额。返回克隆，调用方修改不会污染已保存数据。
 func (s *Store) GetBalance(year, month int, accountCode, auxKey string) *domain.PeriodBalance {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	key := balanceKey(year, month, accountCode, auxKey)
-	return s.balances[key]
+	return s.balances[key].Clone()
 }
 
 // ListAudit 审计日志（倒序）
@@ -340,12 +348,17 @@ func (s *Store) ListAudit() []domain.AuditLog {
 	return out
 }
 
-// Meta 取元数据副本
+// Meta 取元数据副本（VoucherSeq 深拷贝，调用方修改不会污染已保存数据）
 func (s *Store) Meta() Meta {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	m := s.meta
-	if m.VoucherSeq == nil {
+	if m.VoucherSeq != nil {
+		m.VoucherSeq = make(map[string]int, len(s.meta.VoucherSeq))
+		for k, v := range s.meta.VoucherSeq {
+			m.VoucherSeq[k] = v
+		}
+	} else {
 		m.VoucherSeq = map[string]int{}
 	}
 	return m
