@@ -13,13 +13,17 @@ import (
 
 // ExcelService Excel 导入导出
 type ExcelService struct {
-	st *store.Store
+	st     *store.Store
+	voucher *VoucherService
 }
 
 // NewExcelService 构造
 func NewExcelService(st *store.Store) *ExcelService {
 	return &ExcelService{st: st}
 }
+
+// setVoucherService 注入凭证服务，用于复用分录校验逻辑
+func (x *ExcelService) setVoucherService(v *VoucherService) { x.voucher = v }
 
 // ExportVouchers 导出凭证列表到 xlsx
 func (x *ExcelService) ExportVouchers(path string, vouchers []*domain.Voucher) error {
@@ -151,7 +155,9 @@ func (x *ExcelService) ImportAccounts(path string) (int, error) {
 	return count, nil
 }
 
-// ImportVouchers 从 xlsx 导入凭证（每行一条分录，按凭证号聚合，导入为草稿）
+// ImportVouchers 从 xlsx 导入凭证（每行一条分录，按凭证号聚合，导入为草稿）。
+// 导入是原子的：任意一张凭证存在不合法分录（科目不存在/已停用/非末级等），
+// 整个导入失败且不留下任何残缺草稿。
 func (x *ExcelService) ImportVouchers(path string) (int, error) {
 	f, err := excelize.OpenFile(path)
 	if err != nil {
@@ -177,9 +183,8 @@ func (x *ExcelService) ImportVouchers(path string) (int, error) {
 		num, date, summary, code := row[0], row[1], row[4], row[5]
 		debit := parseDec(row[7])
 		credit := parseDec(row[8])
-		if x.st.GetAccount(code) == nil {
-			continue
-		}
+		// 注意：此处不再按科目存在性逐行跳过，否则同一张凭证的无效行会被丢弃、
+		// 剩余行仍聚合成残缺草稿。校验统一交给 validateEntries 在整凭证维度进行。
 		g, ok := groups[num]
 		if !ok {
 			g = &tmp{date: date, summary: summary}
@@ -188,11 +193,14 @@ func (x *ExcelService) ImportVouchers(path string) (int, error) {
 		}
 		g.entries = append(g.entries, domain.VoucherEntry{AccountCode: code, Summary: summary, Debit: debit, Credit: credit})
 	}
-	count := 0
+
+	// 第一阶段：构建并校验全部凭证，不落盘。
+	// 只要存在任何不合法凭证，立即返回错误且不产生副作用。
+	built := make([]*domain.Voucher, 0, len(order))
 	for _, num := range order {
 		g := groups[num]
-		t, err := time.Parse("2006-01-02", g.date)
-		if err != nil {
+		t, perr := time.Parse("2006-01-02", g.date)
+		if perr != nil {
 			t = time.Now()
 		}
 		v := &domain.Voucher{
@@ -205,12 +213,21 @@ func (x *ExcelService) ImportVouchers(path string) (int, error) {
 		}
 		v.PeriodYear = t.Year()
 		v.PeriodMonth = int(t.Month())
-		if err := x.st.Mutate(func() { x.st.SetVoucher(v) }); err != nil {
-			continue
+		if verr := x.voucher.validateEntries(v, false); verr != nil {
+			return 0, fmt.Errorf("凭证 %s 导入失败：%w", num, verr)
 		}
-		count++
+		built = append(built, v)
 	}
-	return count, nil
+
+	// 第二阶段：在单次 Mutate 中一次性写入全部凭证，保证原子落盘。
+	if err := x.st.Mutate(func() {
+		for _, v := range built {
+			x.st.SetVoucher(v)
+		}
+	}); err != nil {
+		return 0, err
+	}
+	return len(built), nil
 }
 
 func (x *ExcelService) setRow(f *excelize.File, sheet string, row int, vals ...any) {

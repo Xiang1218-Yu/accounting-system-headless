@@ -24,19 +24,23 @@ func NewContainer(st *store.Store) *Container {
 	audit := NewAuditService(st)
 	engine := NewPostingEngine(st, audit)
 	ledger := NewLedgerService(st)
+	excel := NewExcelService(st)
+	voucher := NewVoucherService(st, audit, engine)
+	// Excel 导入需复用凭证校验逻辑，注入后二者共享同一套分录合法性判断
+	excel.setVoucherService(voucher)
 	return &Container{
 		Store:   st,
 		Audit:   audit,
 		Seed:    NewSeedService(st),
 		Account: NewAccountService(st, audit),
-		Voucher: NewVoucherService(st, audit, engine),
+		Voucher: voucher,
 		Engine:  engine,
 		Ledger:  ledger,
 		Aux:     NewAuxService(st, audit),
 		Period:  NewPeriodService(st, audit),
 		Closing: NewClosingService(st, ledger, engine, audit),
 		FX:      NewFXService(st, ledger, engine, audit),
-		Excel:   NewExcelService(st),
+		Excel:   excel,
 		Backup:  NewBackupService(st),
 	}
 }
