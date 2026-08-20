@@ -33,6 +33,19 @@ func NewLedgerService(st *store.Store) *LedgerService {
 	return &LedgerService{st: st}
 }
 
+// hasCashMovement 报表计算前确认凭证中存在实际的现金收付分录。
+func (l *LedgerService) hasCashMovement(v *domain.Voucher) bool {
+	for _, entry := range v.Entries {
+		if !isCashAccount(entry.AccountCode) {
+			continue
+		}
+		if entry.Debit.GreaterThan(decimal.Zero) || entry.Credit.GreaterThan(decimal.Zero) {
+			return true
+		}
+	}
+	return false
+}
+
 type aggrPeriod struct {
 	year, month                                            int
 	openingDebit, openingCredit                            decimal.Decimal

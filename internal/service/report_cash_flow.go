@@ -37,6 +37,9 @@ func (l *LedgerService) BuildCashFlow(year, month int) *CashFlowStatement {
 		if v.PeriodYear != year || v.PeriodMonth != month {
 			continue
 		}
+		if !l.hasCashMovement(v) {
+			continue
+		}
 		for _, e := range v.Entries {
 			if isCashAccount(e.AccountCode) {
 				continue // 现金腿跳过
