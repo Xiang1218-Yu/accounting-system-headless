@@ -37,6 +37,11 @@ func (l *LedgerService) BuildCashFlow(year, month int) *CashFlowStatement {
 		if v.PeriodYear != year || v.PeriodMonth != month {
 			continue
 		}
+		// 直接法只反映涉及现金的凭证；纯非现金凭证（如挂应付账款购置资产）
+		// 没有现金腿，不应产生任何现金流量，避免现金流出虚增。
+		if !voucherHasCashLeg(v) {
+			continue
+		}
 		for _, e := range v.Entries {
 			if isCashAccount(e.AccountCode) {
 				continue // 现金腿跳过

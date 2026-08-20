@@ -1,5 +1,7 @@
 package service
 
+import "github.com/tog/accounting-system/internal/domain"
+
 // bsItem 资产负债表行项目
 type bsItem struct {
 	Name     string
@@ -113,6 +115,16 @@ func classifyCF(code string) cfGroup {
 func isCashAccount(code string) bool {
 	for _, c := range cashAccounts {
 		if c == code {
+			return true
+		}
+	}
+	return false
+}
+
+// voucherHasCashLeg 凭证是否含现金科目分录（直接法下计入现金流量表的前提）
+func voucherHasCashLeg(v *domain.Voucher) bool {
+	for _, e := range v.Entries {
+		if isCashAccount(e.AccountCode) {
 			return true
 		}
 	}
