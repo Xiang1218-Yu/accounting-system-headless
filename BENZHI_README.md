@@ -1,60 +1,21 @@
-# Accounting System · Benzhi 构建与运行说明
+# accounting-system-headless
 
-## 项目简介
+项目用途：一个使用 JSON 文件存储数据的本地会计核算系统。项目提供凭证录入、审核与过账、期间余额、结转、账簿和三大报表等服务层能力，并包含 Fyne 桌面端入口。项目源代码、依赖描述和评测专用 Docker 文件共同构成自包含任务；不依赖本机预编译二进制。
 
-Accounting System 是一个使用 JSON 文件作为本地持久化存储的 Go 会计核算系统。它提供科目管理、凭证录入、审核与过账、期间余额、结转、账簿查询以及资产负债表、利润表和现金流量表等服务层能力；同时包含基于 Fyne 的桌面端入口。
-
-## 前置条件
-
-- Go（以 `go.mod` 中声明的版本为准）
-- Docker（仅在构建 Benzhi 评测镜像时需要）
-
-## 标准构建命令
-
-在项目根目录执行：
+## 标准构建、运行和测试命令
 
 ```bash
 go build ./...
-```
-
-## 标准运行命令
-
-启动桌面端入口：
-
-```bash
-go run ./cmd/accounting
-```
-
-## 标准测试命令
-
-执行全部 Go 测试：
-
-```bash
+go run .
 go test ./...
 ```
+## 评测容器
 
-如需查看单个测试的详细输出，可使用：
-
-```bash
-go test -v ./...
-```
-
-## 构建 Benzhi Docker 镜像
-
-`build_benzhi_docker.sh` 会使用项目根目录的 `benzhi.Dockerfile`，并默认构建 `linux/amd64` 镜像：
+评测专用 Dockerfile 为 `benzhi.Dockerfile`，构建脚本为 `build_benzhi_docker.sh`。
 
 ```bash
-./build_benzhi_docker.sh accounting-system-headless
-```
-
-也可以显式指定镜像名和目标平台：
-
-```bash
-./build_benzhi_docker.sh accounting-system-headless linux/arm64
-```
-
-构建完成后，可进入容器执行构建、运行或测试命令：
-
-```bash
-docker run -it accounting-system-headless:latest
+chmod +x build_benzhi_docker.sh
+./build_benzhi_docker.sh my-go-task linux/arm64
+./build_benzhi_docker.sh my-go-task linux/amd64
+docker run -it my-go-task:latest
 ```
