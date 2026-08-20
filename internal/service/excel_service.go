@@ -171,15 +171,15 @@ func (x *ExcelService) ImportVouchers(path string) (int, error) {
 	groups := map[string]*tmp{}
 	order := []string{}
 	for i, row := range rows {
-		if i == 0 || len(row) < 8 {
+		if i == 0 {
 			continue
+		}
+		if len(row) < 9 {
+			return 0, fmt.Errorf("第%d行格式不完整", i+1)
 		}
 		num, date, summary, code := row[0], row[1], row[4], row[5]
 		debit := parseDec(row[7])
 		credit := parseDec(row[8])
-		if x.st.GetAccount(code) == nil {
-			continue
-		}
 		g, ok := groups[num]
 		if !ok {
 			g = &tmp{date: date, summary: summary}
@@ -188,12 +188,12 @@ func (x *ExcelService) ImportVouchers(path string) (int, error) {
 		}
 		g.entries = append(g.entries, domain.VoucherEntry{AccountCode: code, Summary: summary, Debit: debit, Credit: credit})
 	}
-	count := 0
+	vouchers := make([]*domain.Voucher, 0, len(order))
 	for _, num := range order {
 		g := groups[num]
 		t, err := time.Parse("2006-01-02", g.date)
 		if err != nil {
-			t = time.Now()
+			return 0, fmt.Errorf("凭证 %s 日期无效: %w", num, err)
 		}
 		v := &domain.Voucher{
 			ID:          uuid.NewString(),
@@ -205,12 +205,19 @@ func (x *ExcelService) ImportVouchers(path string) (int, error) {
 		}
 		v.PeriodYear = t.Year()
 		v.PeriodMonth = int(t.Month())
-		if err := x.st.Mutate(func() { x.st.SetVoucher(v) }); err != nil {
-			continue
+		if err := validateVoucherEntries(x.st, v, false); err != nil {
+			return 0, fmt.Errorf("凭证 %s 校验失败: %w", num, err)
 		}
-		count++
+		vouchers = append(vouchers, v)
 	}
-	return count, nil
+	if err := x.st.Mutate(func() {
+		for _, v := range vouchers {
+			x.st.SetVoucher(v)
+		}
+	}); err != nil {
+		return 0, err
+	}
+	return len(vouchers), nil
 }
 
 func (x *ExcelService) setRow(f *excelize.File, sheet string, row int, vals ...any) {

@@ -147,12 +147,16 @@ func (s *VoucherService) Unpost(id, opUser string) error {
 
 // validateEntries 校验分录合法性。requireBalance 为 true 时强制借贷平衡
 func (s *VoucherService) validateEntries(v *domain.Voucher, requireBalance bool) error {
+	return validateVoucherEntries(s.st, v, requireBalance)
+}
+
+func validateVoucherEntries(st *store.Store, v *domain.Voucher, requireBalance bool) error {
 	if len(v.Entries) < 2 {
 		return errors.New("凭证至少需两行分录")
 	}
 	totalD, totalC := decimal.Zero, decimal.Zero
 	for i, e := range v.Entries {
-		acc := s.st.GetAccount(e.AccountCode)
+		acc := st.GetAccount(e.AccountCode)
 		if acc == nil {
 			return fmt.Errorf("第%d行：科目 %s 不存在", i+1, e.AccountCode)
 		}
@@ -173,7 +177,7 @@ func (s *VoucherService) validateEntries(v *domain.Voucher, requireBalance bool)
 			if !hasAuxType(acc.AuxTypes, at) {
 				return fmt.Errorf("第%d行：科目 %s 未启用 %s 辅助核算", i+1, e.AccountCode, at)
 			}
-			if s.st.GetAuxItem(itemID) == nil {
+			if st.GetAuxItem(itemID) == nil {
 				return fmt.Errorf("第%d行：辅助核算项 %s 不存在", i+1, itemID)
 			}
 		}
